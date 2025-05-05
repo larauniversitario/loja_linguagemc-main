@@ -8,9 +8,10 @@
 static int contador_produto = 0;
 static int contador_carrinho = 0;
 static itemCarrinho carrinho[50];
+static Produto produtos[50];
 
-//vou implementar todas as funçoes ainda 
 void infoProduto(Produto prod){
+    printf("Nome: %s\n Codigo:%d\n Preco: R$ %.2f", prod.nome, prod.codigo, prod.preco );
 
 }
   
@@ -20,10 +21,35 @@ void salvarProduto(Produto p){
 void carregarProdutos(){
 
 }
-void listarProdutos(){
-
+void listarProdutos() {
+    if (contador_produto > 0) {
+        printf("LISTAGEM DOS PRODUTOS:\n");
+        for (int i = 0; i < contador_produto; i++) {
+            infoProduto(produtos[i]);
+            Sleep(2);
+        }
+    } else {
+        printf("Nenhum produto cadastrado.\n");
+    }
 }
-void cadstrarProdutodos(){
+
+void cadastrarProdutodos(){
+    Produto novo;
+    printf("CADASTRO DE PRODUTOS");
+    printf("--------------------");
+    printf("Digite o nome do produto:");
+    fgets(novo.nome,30,stdin);
+    printf("Digite o valor do produto:");
+    scanf("%f",&novo.preco);
+
+    printf("o produto foi cadastrado!");
+    
+    novo.codigo=(contador_produto + 1);
+    produtos[contador_produto++] = novo;
+    salvarProduto(novo);
+    contador_produto= contador_produto +1;
+}
+void comprarProduto(){
 
 }
 void visualizarCarrinho(){
@@ -40,5 +66,45 @@ int * temNoCarrinho(int codigo){
 }
 
 void menu(){
+    printf("--------MENU-------\n");
+    printf("1-Cadastrar produto\n");
+    printf("2-Listar produto\n");
+    printf("3-Comprar produto\n");
+    printf("4-visualizar carrinho\n");
+    printf("5-Fechar pedido\n");
+    printf("6-Sair do sistema\n");
 
+    int opcao;
+    printf("Digite um numero:");
+    scanf("%d",&opcao);
+
+    switch (opcao)
+    {
+    case 1:
+        cadastrarProdutodos();
+        break;
+     case 2:
+        listarProdutos();
+        break;
+    case 3:
+        comprarProdutos();
+        break;
+    case 4:
+        visualizarCarrinho();
+        break;
+    case 5:
+        fecharPedido();
+        break;
+    case 6:
+        printf("Volte sempre!\n");
+        Sleep(2);
+        exit(0);
+        break;
+    default:
+        printf("Numero invalido!");
+        Sleep(2);
+        menu();
+        break;
+    }
 }
+
