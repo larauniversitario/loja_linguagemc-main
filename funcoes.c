@@ -17,14 +17,14 @@ void infoProduto(Produto prod){
   
 void carregarProdutos(){
 FILE *arq;
-arq= fopen("projeto.txt", "r");
+arq= fopen("projeto.txt", "r");//leitura do arquivo
 
 if (arq== NULL)return;
 while(fscanf(arq,"%s %d %f",produtos[contador_produto].nome,//Lê dados formatados de um arquivo
     &produtos[contador_produto].codigo,
     &produtos[contador_produto].preco) == 3);
 
-contador_produto ++;
+    contador_produto ++;
 fclose(arq);
 }
 void salvarProduto(Produto p){
@@ -32,7 +32,7 @@ void salvarProduto(Produto p){
     arq= fopen("projeto.txt", "a");//adiciona igual a um append
     
     if (arq== NULL)return;
-    while(fprintf(arq,"%s %d %.2f",p.nome,p.codigo,p.preco));//É usado para escrever dados formatados em um arquivo,
+    fprintf(arq,"%s %d %.2f",p.nome,p.codigo,p.preco);//É usado para escrever dados formatados em um arquivo
     
    fclose(arq);
 }
@@ -55,6 +55,7 @@ void cadastrarProdutodos(){
     printf("--------------------");
     printf("Digite o nome do produto:");
     fgets(novo.nome,30,stdin);
+    novo.nome[strcspn(novo.nome, "\n")] = '\0';    // remove o '\n'
     printf("Digite o valor do produto:");
     scanf("%f",&novo.preco);
 
@@ -63,7 +64,7 @@ void cadastrarProdutodos(){
     novo.codigo=(contador_produto + 1);
     produtos[contador_produto++] = novo;
     salvarProduto(novo);
-    contador_produto= contador_produto +1;
+    
 }
 void comprarProduto(){
 
@@ -103,7 +104,7 @@ void menu(){
         listarProdutos();
         break;
     case 3:
-        comprarProdutos();
+        comprarProduto();
         break;
     case 4:
         visualizarCarrinho();
