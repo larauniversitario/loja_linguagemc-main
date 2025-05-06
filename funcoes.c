@@ -15,12 +15,28 @@ void infoProduto(Produto prod){
 
 }
   
-void salvarProduto(Produto p){
-
-}
 void carregarProdutos(){
+FILE *arq;
+arq= fopen("projeto.txt", "r");
 
+if (arq== NULL)return;
+while(fscanf(arq,"%s %d %f",produtos[contador_produto].nome,//Lê dados formatados de um arquivo
+    &produtos[contador_produto].codigo,
+    &produtos[contador_produto].preco) == 3);
+
+contador_produto ++;
+fclose(arq);
 }
+void salvarProduto(Produto p){
+    FILE *arq;
+    arq= fopen("projeto.txt", "a");//adiciona igual a um append
+    
+    if (arq== NULL)return;
+    while(fprintf(arq,"%s %d %.2f",p.nome,p.codigo,p.preco));//É usado para escrever dados formatados em um arquivo,
+    
+   fclose(arq);
+}
+
 void listarProdutos() {
     if (contador_produto > 0) {
         printf("LISTAGEM DOS PRODUTOS:\n");
