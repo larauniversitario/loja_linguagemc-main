@@ -7,7 +7,7 @@
 
 static int contador_produto = 0;
 static int contador_carrinho = 0;
-static itemCarrinho carrinho[50];
+static itemCarrinho* carrinho = NULL;
 static Produto produtos[50];
 
 void infoProduto(Produto prod){
@@ -49,79 +49,71 @@ void listarProdutos() {
     }
 }
 
-void cadastrarProdutodos(){
+void cadastrarProdutodos() {
     Produto novo;
-    printf("CADASTRO DE PRODUTOS");
-    printf("--------------------");
-    printf("Digite o nome do produto:");
-    fgets(novo.nome,30,stdin);
-    novo.nome[strcspn(novo.nome, "\n")] = '\0';    // remove o '\n'
-    printf("Digite o valor do produto:");
-    scanf("%f",&novo.preco);
+    printf("CADASTRO DE PRODUTOS\n");
+    printf("--------------------\n");
+    printf("Digite o nome do produto: ");
+    getchar(); // limpa buffer
+    fgets(novo.nome, 30, stdin);
+    novo.nome[strcspn(novo.nome, "\n")] = '\0';
 
-    printf("o produto foi cadastrado!");
-    
-    novo.codigo=(contador_produto + 1);
+    printf("Digite o valor do produto: ");
+    scanf("%f", &novo.preco);
+
+    novo.codigo = (contador_produto + 1);
     produtos[contador_produto++] = novo;
     salvarProduto(novo);
-    
+    printf("O produto foi cadastrado!\n");
+
+    Sleep(2000);
+    menu();
 }
-void comprarProduto(){
-    if(contador_produto > 0){
+
+void comprarProduto() {
+    if (contador_produto > 0) {
         printf("Informe o código do produto que deseja adicionar ao carrinho.\n");
         printf("========== Produtos Disponíveis ==========\n");
-        for(int i = 0; i < contador_produto; i++){
-           infoProduto(produtos[i]);
-           printf("--------------------------\n");
-           Sleep(1000);
+        for (int i = 0; i < contador_produto; i++) {
+            infoProduto(produtos[i]);
+            printf("--------------------------\n");
+            Sleep(1000);
         }
+
         int codigo;
         scanf("%d", &codigo);
-        getchar();
 
         int tem_mercado = 0;
 
-        for(int i = 0; i < contador_produto; i++){
-            if(produtos[i].codigo == codigo){
+        for (int i = 0; i < contador_produto; i++) {
+            if (produtos[i].codigo == codigo) {
                 tem_mercado = 1;
-
                 Produto p = pegarProdutoPorCodigo(codigo);
-                char nome_limpo[100];
-                strcpy(nome_limpo, p.nome);
-                nome_limpo[strcspn(nome_limpo, "\n")] = '\0';
 
-                if(contador_carrinho > 0){
-                    int * retorno = temNoCarrinho(codigo);
-                    if (retorno[0] == 1){
-                        carrinho[retorno[1]].quantidade++;
+                if (contador_carrinho == 0) {
+                    carrinho = malloc(sizeof(itemCarrinho));
+                } else {
+                    carrinho = realloc(carrinho, (contador_carrinho + 1) * sizeof(itemCarrinho));
+                }
 
-                        char nome_existente[100];
-                        strcpy(nome_existente, carrinho[retorno[1]].produto.nome);
-                        nome_existente[strcspn(nome_existente, "\n")] = '\0';
-
-                        printf("Aumentei a quantidade do produto %s já existente no carrinho.\n", nome_existente);
-                        
-                    
-                    } else {//adiciona o produto pela primeira vez no carrinho se ele ainda nao estiver
-                        carrinho[contador_carrinho].produto = p;
-                        carrinho[contador_carrinho].quantidade = 1;
-                        contador_carrinho++;
-                        printf("O produto %s foi adicionado ao carrinho.\n", nome_limpo);
-
-                    }
-                } else {//adiciona o primeiro produto do carrinho
+                int* retorno = temNoCarrinho(codigo);
+                if (retorno[0] == 1) {
+                    carrinho[retorno[1]].quantidade++;
+                    printf("Aumentei a quantidade do produto %s já existente no carrinho.\n", p.nome);
+                } else {
                     carrinho[contador_carrinho].produto = p;
                     carrinho[contador_carrinho].quantidade = 1;
                     contador_carrinho++;
-                    printf("O produto %s foi adicionado ao carrinho.\n", nome_limpo);
-                    
+                    printf("O produto %s foi adicionado ao carrinho.\n", p.nome);
                 }
+
                 Sleep(2000);
                 menu();
                 return;
             }
         }
-        if(!tem_mercado){ //produto nao existente(cadastrado) no mercado
+
+        if (!tem_mercado) {
             printf("Não foi encontrado o produto com código %d.\n", codigo);
             Sleep(2000);
             menu();
