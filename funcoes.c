@@ -67,9 +67,88 @@ void cadastrarProdutodos(){
     
 }
 void comprarProduto(){
+    if(contador_produto > 0){
+        printf("Informe o código do produto que deseja adicionar ao carrinho.\n");
+        printf("========== Produtos Disponíveis ==========\n");
+        for(int i = 0; i < contador_produto; i++){
+           infoProduto(produtos[i]);
+           printf("--------------------------\n");
+           Sleep(1000);
+        }
+        int codigo;
+        scanf("%d", &codigo);
+        getchar();
 
+        int tem_mercado = 0;
+
+        for(int i = 0; i < contador_produto; i++){
+            if(produtos[i].codigo == codigo){
+                tem_mercado = 1;
+
+                Produto p = pegarProdutoPorCodigo(codigo);
+                char nome_limpo[100];
+                strcpy(nome_limpo, p.nome);
+                nome_limpo[strcspn(nome_limpo, "\n")] = '\0';
+
+                if(contador_carrinho > 0){
+                    int * retorno = temNoCarrinho(codigo);
+                    if (retorno[0] == 1){
+                        carrinho[retorno[1]].quantidade++;
+
+                        char nome_existente[100];
+                        strcpy(nome_existente, carrinho[retorno[1]].produto.nome);
+                        nome_existente[strcspn(nome_existente, "\n")] = '\0';
+
+                        printf("Aumentei a quantidade do produto %s já existente no carrinho.\n", nome_existente);
+                        
+                    
+                    } else {//adiciona o produto pela primeira vez no carrinho se ele ainda nao estiver
+                        carrinho[contador_carrinho].produto = p;
+                        carrinho[contador_carrinho].quantidade = 1;
+                        contador_carrinho++;
+                        printf("O produto %s foi adicionado ao carrinho.\n", nome_limpo);
+
+                    }
+                } else {//adiciona o primeiro produto do carrinho
+                    carrinho[contador_carrinho].produto = p;
+                    carrinho[contador_carrinho].quantidade = 1;
+                    contador_carrinho++;
+                    printf("O produto %s foi adicionado ao carrinho.\n", nome_limpo);
+                    
+                }
+                Sleep(2000);
+                menu();
+                return;
+            }
+        }
+        if(!tem_mercado){ //produto nao existente(cadastrado) no mercado
+            printf("Não foi encontrado o produto com código %d.\n", codigo);
+            Sleep(2000);
+            menu();
+        }
+    } else {
+        printf("Ainda não existem produtos para vender.\n");
+        Sleep(2000);
+        menu();
+    }
 }
 void visualizarCarrinho(){
+    if(contador_carrinho > 0){
+        printf("Produtos do carrinho:\n");
+        printf("---------------------\n");
+        for(int i = 0; i < contador_carrinho; i++){
+            infoProduto(carrinho[i].produto);
+            printf("Quantidade: %d\n", carrinho[i].quantidade);
+            printf("---------------------\n");
+            Sleep(1000);
+        }
+        sleep(2000);
+        menu();
+    }else{
+        printf("Ainda não temos produto no carrinho.\n");
+        Sleep(2000);
+        menu();
+    }
 
 }
 void fecharPedido(){
