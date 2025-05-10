@@ -53,7 +53,7 @@ void listarProdutos() {
     }
 }
 
-void cadastrarProdutodos(){
+void cadastrarProdutodos(){//teste
     Produto novo;
     printf("CADASTRO DE PRODUTOS");
     printf("--------------------");
