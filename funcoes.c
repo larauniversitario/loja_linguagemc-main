@@ -16,25 +16,25 @@ void infoProduto(Produto prod){
 }
   
 void carregarProdutos() {
-    FILE *arq;
-    arq = fopen("projeto.txt", "r"); // Leitura do arquivo
+    FILE *arq = fopen("projeto.txt", "r");
 
     if (arq == NULL) return;
 
     while (fscanf(arq, "%s %d %f", produtos[contador_produto].nome,
-            &produtos[contador_produto].codigo,
-            &produtos[contador_produto].preco) == 3) {
+                  &produtos[contador_produto].codigo,
+                  &produtos[contador_produto].preco) == 3) {
         contador_produto++;
     }
 
     fclose(arq);
 }
+
 void salvarProduto(Produto p){
     FILE *arq;
-    arq= fopen("projeto.txt", "a");//adiciona igual a um append
+    arq= fopen("produto.txt", "a");//adiciona igual a um append
     
     if (arq== NULL)return;
-    fprintf(arq,"%s %d %.2f",p.nome,p.codigo,p.preco);//É usado para escrever dados formatados em um arquivo
+    fprintf(arq, "%s %d %.2f\n",p.nome,p.codigo,p.preco);//É usado para escrever dados formatados em um arquivo
     
    fclose(arq);
 }
@@ -44,12 +44,11 @@ void listarProdutos() {
         printf("LISTAGEM DOS PRODUTOS:\n");
         for (int i = 0; i < contador_produto; i++) {
             infoProduto(produtos[i]);
-            Sleep(2000);
+            Sleep(1000);
         }
     } else {
         printf("Nenhum produto cadastrado.\n");
         Sleep(2000);
-        menu();
     }
 }
 
@@ -71,7 +70,6 @@ void cadastrarProdutos() {
     printf("O produto foi cadastrado!\n");
 
     Sleep(2000);
-    menu();
 }
 
 void comprarProduto() {
@@ -112,7 +110,6 @@ void comprarProduto() {
                 }
 
                 Sleep(2000);
-                menu();
                 return;
             }
         }
@@ -120,12 +117,10 @@ void comprarProduto() {
         if (!tem_mercado) {
             printf("Não foi encontrado o produto com código %d.\n", codigo);
             Sleep(2000);
-            menu();
         }
     } else {
         printf("Ainda não existem produtos para vender.\n");
         Sleep(2000);
-        menu();
     }
 }
 void visualizarCarrinho(){
@@ -139,11 +134,9 @@ void visualizarCarrinho(){
             Sleep(1000);
         }
         Sleep(2000);
-        menu();
     }else{
         printf("Ainda não temos produto no carrinho.\n");
         Sleep(2000);
-        menu();
     }
 
 }
@@ -163,21 +156,19 @@ void fecharPedido(){
         contador_carrinho = 0;
         printf("Obrigada por sua compra!\n");
         Sleep(5000);
-        menu();
     }else{
         printf("Nao ha nenhum produto no seu carrinho ainda.\n");
         Sleep(3000);
-        menu();
     }
 }
 Produto pegarProdutoPorCodigo(int codigo){
     Produto p = {"", 0, 0.0};// valor padrao caso o prod n seja encontrado;
     for (int i = 0; i < contador_produto; i++){
         if(produtos[i].codigo == codigo){
-            p = produtos[i];
+            return  produtos[i];
         }
-    return p;
     }
+        return p;
 }
 int * temNoCarrinho(int codigo){
     static int retorno[] = {0, 0};
@@ -191,45 +182,45 @@ int * temNoCarrinho(int codigo){
 }
 
 void menu(){
-    printf("--------MENU-------\n");
-    printf("1-Cadastrar produto\n");
-    printf("2-Listar produto\n");
-    printf("3-Comprar produto\n");
-    printf("4-visualizar carrinho\n");
-    printf("5-Fechar pedido\n");
-    printf("6-Sair do sistema\n");
-
     int opcao;
-    printf("Digite um numero:");
-    scanf("%d",&opcao);
+    do{
+        printf("--------MENU-------\n");
+        printf("1-Cadastrar produto\n");
+        printf("2-Listar produto\n");
+        printf("3-Comprar produto\n");
+        printf("4-visualizar carrinho\n");
+        printf("5-Fechar pedido\n");
+        printf("6-Sair do sistema\n");
+        printf("Digite um numero:");
+        scanf("%d",&opcao);
 
-    switch (opcao)
-    {
-    case 1:
-        cadastrarProdutos();
+        switch (opcao)
+        {
+            case 1:
+                cadastrarProdutos();
+                break;
+            case 2:
+                listarProdutos();
+                break;
+            case 3:
+                comprarProduto();
+                break;
+            case 4:
+                visualizarCarrinho();
+                break;
+            case 5:
+                fecharPedido();
+                break;
+            case 6:
+                printf("Volte sempre!\n");
+            Sleep(2000);
+            exit(0);
         break;
-     case 2:
-        listarProdutos();
-        break;
-    case 3:
-        comprarProduto();
-        break;
-    case 4:
-        visualizarCarrinho();
-        break;
-    case 5:
-        fecharPedido();
-        break;
-    case 6:
-        printf("Volte sempre!\n");
-        Sleep(2000);
-        exit(0);
-        break;
-    default:
-        printf("Numero invalido!");
-        Sleep(2000);
-        menu();
-        break;
-    }
+            default:
+                printf("Numero invalido!");
+                Sleep(2000);
+                break;
+        }
+    } while(opcao != 6);
 }
 
