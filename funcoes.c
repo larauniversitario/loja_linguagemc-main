@@ -48,6 +48,8 @@ void listarProdutos() {
         }
     } else {
         printf("Nenhum produto cadastrado.\n");
+        Sleep(2000);
+        menu();
     }
 }
 
