@@ -99,11 +99,13 @@ void comprarProduto() {
                     carrinho = realloc(carrinho, (contador_carrinho + 1) * sizeof(itemCarrinho));
                 }
 
-                int * retorno = temNoCarrinho(codigo);
+                int *retorno = temNoCarrinho(codigo);
                 if (retorno[0] == 1) {
+                    // produto já no carrinho: só aumenta a quantidade do índice certo
                     carrinho[retorno[1]].quantidade++;
                     printf("Aumentei a quantidade do produto %s já existente no carrinho.\n", p.nome);
                 } else {
+                    // produto novo no carrinho
                     carrinho[contador_carrinho].produto = p;
                     carrinho[contador_carrinho].quantidade = 1;
                     contador_carrinho++;
@@ -124,6 +126,7 @@ void comprarProduto() {
         Sleep(2000);
     }
 }
+
 void visualizarCarrinho(){
     if(contador_carrinho > 0){
         printf("Produtos do carrinho:\n");
@@ -177,8 +180,11 @@ int * temNoCarrinho(int codigo){
         if(carrinho[i].produto.codigo == codigo){
             retorno[0] = 1;
             retorno[1] = i;
+            return retorno; // RETORNO IMEDIATO AO ENCONTRAR
         }      
     }
+    retorno[0] = 0; // Não encontrou
+    retorno[1] = -1;
     return retorno;
 }
 
