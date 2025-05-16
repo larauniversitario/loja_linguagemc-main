@@ -75,8 +75,8 @@ void cadastrarProdutos() {
 
 void comprarProduto() {
     if (contador_produto > 0) {
-        printf("Informe o código do produto que deseja adicionar ao carrinho.\n");
-        printf("========== Produtos Disponíveis ==========\n");
+        printf("Informe o codigo do produto que deseja adicionar ao carrinho.\n");
+        printf("========== Produtos Disponiveis ==========\n");
         for (int i = 0; i < contador_produto; i++) {
             infoProduto(produtos[i]);
             printf("--------------------------\n");
@@ -116,11 +116,11 @@ void comprarProduto() {
         }
 
         if (!tem_mercado) {
-            printf("Não foi encontrado o produto com código %d.\n", codigo);
+            printf("Nao foi encontrado o produto com codigo %d.\n", codigo);
             Sleep(2000);
         }
     } else {
-        printf("Ainda não existem produtos para vender.\n");
+        printf("Ainda nao existem produtos para vender.\n");
         Sleep(2000);
     }
 }
@@ -136,7 +136,7 @@ void visualizarCarrinho(){
         }
         Sleep(2000);
     }else{
-        printf("Ainda não temos produto no carrinho.\n");
+        printf("Ainda nao temos produto no carrinho.\n");
         Sleep(2000);
     }
 
