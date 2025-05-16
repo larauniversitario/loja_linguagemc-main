@@ -11,12 +11,12 @@ static itemCarrinho* carrinho = NULL;
 static Produto produtos[50];
 
 void infoProduto(Produto prod){
-    printf("Nome: %s\n Codigo:%d\n Preco: R$ %.2f", prod.nome, prod.codigo, prod.preco );
+    printf("Nome: %s\nCodigo:%d\nPreco: R$ %.2f\n", prod.nome, prod.codigo, prod.preco );
 
 }
   
 void carregarProdutos() {
-    FILE *arq = fopen("projeto.txt", "r");
+    FILE *arq = fopen("produtos.txt", "r");
 
     if (arq == NULL) return;
 
@@ -31,10 +31,11 @@ void carregarProdutos() {
 
 void salvarProduto(Produto p){
     FILE *arq;
-    arq= fopen("produto.txt", "a");//adiciona igual a um append
+    arq= fopen("produtos.txt", "a");//adiciona igual a um append
     
     if (arq== NULL)return;
-    fprintf(arq, "%s %d %.2f\n",p.nome,p.codigo,p.preco);//É usado para escrever dados formatados em um arquivo
+
+    fprintf(arq, "%s %d %.2f\n", p.nome, p.codigo, p.preco);
     
    fclose(arq);
 }
