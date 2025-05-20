@@ -39,7 +39,7 @@ No bash
 gcc main.c -o mercadinho
 mercadinho.exe
 
-No Linux (requer remoção ou substituição de windows.h e Sleep()):
+No Linux (requer remoxcção ou substituição de windows.h e Sleep()):
 No bash
 gcc main.c -o mercadinho
 ./mercadinho

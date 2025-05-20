@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Compilar mercadinho",
+        "type": "shell",
+        "command": "gcc",
+        "args": [
+          "main.c",
+          "funcoes.c",
+          "-o",
+          "mercadinho.exe"
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": [],
+        "detail": "Compila main.c e funcoes.c gerando mercadinho.exe"
+      }
+    ]
+  }
+  
