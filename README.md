@@ -35,14 +35,10 @@ Alocação dinâmica com malloc e realloc
 3-Como Compilar e Executar:
 
 No Windows:
-No bash
-gcc main.c -o mercadinho
-mercadinho.exe
+No terminal
+.\mercadinho.exe
 
-No Linux (requer remoxcção ou substituição de windows.h e Sleep()):
-No bash
-gcc main.c -o mercadinho
-./mercadinho
+
 
 
 4- Estrutura:
