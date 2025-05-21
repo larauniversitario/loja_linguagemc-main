@@ -1,4 +1,5 @@
 # loja_linguagemc
+<<<<<<< HEAD
 
 Este projeto é um sistema simples de mercadinho desenvolvido em linguagem C. Ele permite o cadastro de produtos, visualização de estoque, gerenciamento de carrinho de compras e finalização de pedidos.
 
@@ -68,3 +69,5 @@ Digite o número da opção desejada e pressione Enter.
 Siga as instruções no terminal (ex: digitar nome do produto, código, etc).
 
 Após o uso, você pode fechar o programa escolhendo a opção 6 - Sair do sistema.
+=======
+>>>>>>> b4ea79fb9a584015834296c028aa8b3dac86d310
